@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Unity.MLAgents;
+using Unity.MLAgents.Sensors;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
 using UnityEngine.Scripting.APIUpdating;
@@ -10,8 +11,8 @@ public class VehicleAgent : Agent
     [Tooltip("Force to apply when accelerating")]
     public float accelerateForce = 2f;
 
-    [Tooltip("Force to apply when braking")]
-    public float brakingForce = 2.5f;
+    [Tooltip("Force to apply when braking, Braking force should be a positive number")]
+    public float brakingForce = 0.5f;
 
     [Tooltip("Maximun velocity of the agent")]
     public float maximumSpeed = 5f;
@@ -87,7 +88,7 @@ public class VehicleAgent : Agent
         int startPos = Random.Range(0, trackArea.StartPosistions.Count);
         if (trainingMode)
         {
-            
+
         }
         else if (isPlayer)
         {
@@ -108,10 +109,100 @@ public class VehicleAgent : Agent
     }
 
 
+    /// <summary>
+    /// Called when action is received from either the player input or the nerual network
+    /// 
+    /// vectorAction[i] represents:
+    /// Index 0: acceleration force (range: braking = -1 to accelerating = 1);
+    /// Index 1: turning force (range: left = -1 to right = 1)
+    /// </summary>
+    /// <param name="vectorAction"></param>
+    public override void OnActionReceived(float[] vectorAction)
+    {
+        // If frozen do nothing
+        if (frozen) return;
+
+        // Calculate acceleration force
+        Vector3 moveForce = Vector3.zero;
+        if (vectorAction[0] > 0)
+        {
+            moveForce = (vectorAction[0] * accelerateForce) * transform.forward;
+        }
+        else if (vectorAction[0] < 0)
+        {
+            moveForce = (vectorAction[0] * brakingForce) * transform.forward;
+        }
+
+        if (rigidbody.velocity.magnitude < maximumSpeed)
+        {
+            rigidbody.AddForce(moveForce);
+        }
+
+        // Get current rotation
+        Vector3 rotationVector = transform.rotation.eulerAngles;
+
+        // Calculate rotation
+        float rotationChange = vectorAction[1];
+
+        // Calculate smooth rotation change
+        smoothTurnChange = Mathf.MoveTowards(smoothTurnChange, rotationChange, 2f * Time.fixedDeltaTime);
+
+        // Calculate new rotation based on smoothed values
+        float newRotation = rotationVector.y + smoothTurnChange * Time.fixedDeltaTime * turningSpeed;
+
+        // Apply the new rotation
+        transform.rotation = Quaternion.Euler(0f, newRotation, 0f);
+    }
+
+    public override void CollectObservations(VectorSensor sensor)
+    {
+        // If nextCheckpoint is null, observe an empty array and return early
+        if (nextCheckpoint == null)
+        {
+            sensor.AddObservation(new float[8]);
+            return;
+        }
+
+        // Observe the agent's local rotation (4 observations)
+        sensor.AddObservation(transform.localRotation.normalized);
+
+        // Get a vector from the vechile to the next checkpoint
+        Vector3 toCheckpoint = nextCheckpoint.transform.position - transform.position;
+
+        // Observe a normalized vecto pointing to the next checkpoint (3 observations)
+        sensor.AddObservation(toCheckpoint.normalized);
+
+        // Observe a dot product that indicates whether the vehicle is pointing toward the checkpoint (1 observation)
+        // +1 means that the vehicle is pointing directly at the checkpoint, -1 means directly away
+        sensor.AddObservation(Vector3.Dot(transform.forward.normalized, -nextCheckpoint.transform.forward.normalized));
+
+        // 8 total observations
+    }
 
 
 
+    /// <summary>
+    /// When Behavior Type is set to "Heuristic Only" on the agent's Behavior Parameters,
+    /// this function will be called. Its return value will be fed into
+    /// <see cref="OnActionReceived(float[])"/> instead of using the neural network
+    /// </summary>
+    /// <param name="actionsOut">An output action array</param>
+    public override void Heuristic(float[] actionsOut)
+    {
+        // Convert controller inputs to movement and turning
+        // All values should be between -1 and 1
 
+        // Acceleration/Braking
+        float accelerateValue = Input.GetAxis("Gas");
+
+        // Left/Right
+        float turnValue = Input.GetAxis("Turn");
+
+        // Add the 2 values to the actionsOut array
+        actionsOut[0] = accelerateValue;
+        actionsOut[1] = turnValue;
+
+    }
 
     /// <summary>
     /// Prevent the agent from moving and taking actions
@@ -157,7 +248,8 @@ public class VehicleAgent : Agent
             // End of track loop reached, set back to beginning
             trackArea.ResetCheckpoints();
             nextCheckpoint = trackArea.Checkpoints[0];
-        } else
+        }
+        else
         {
             nextCheckpoint = trackArea.Checkpoints[trackArea.Checkpoints.IndexOf(nextCheckpoint) + 1];
         }
@@ -169,7 +261,8 @@ public class VehicleAgent : Agent
     /// <param name="collider">The trigger collider</param>
     private void OnTriggerEnter(Collider collider)
     {
-        if (collider.CompareTag("checkpoint")){
+        if (collider.CompareTag("checkpoint"))
+        {
             Checkpoint cp = trackArea.GetCheckpointFromCollider(collider);
             // hit the next checkpoint
             if (cp.gameObject.name.Equals(nextCheckpoint.gameObject.name))
@@ -197,17 +290,20 @@ public class VehicleAgent : Agent
     /// <param name="collision"></param>
     private void OnCollisionEnter(Collision collision)
     {
-        if(trainingMode && collision.collider.CompareTag("boundary"))
+        if (trainingMode && collision.collider.CompareTag("boundary"))
         {
             // Collided with area boundary, negative reward given
             AddReward(punishmentValue);
         }
     }
 
+    /// <summary>
+    /// Called every frame
+    /// </summary>
     private void Update()
     {
         //Drawn line to next collier
-        if(nextCheckpoint != null)
+        if (nextCheckpoint != null)
         {
             Debug.DrawLine(transform.position, nextCheckpoint.gameObject.transform.position, Color.green);
         }

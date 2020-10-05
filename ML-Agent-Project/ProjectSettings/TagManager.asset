@@ -8,6 +8,7 @@ TagManager:
   - boundary
   - checkpoint_Collection
   - startPosition
+  - agentCamera
   layers:
   - Default
   - TransparentFX
