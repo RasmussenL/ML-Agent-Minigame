@@ -427,7 +427,7 @@ MonoBehaviour:
   maximumSpeed: 30
   turningSpeed: 150
   agentCamera: {fileID: 1869096508}
-  trainingMode: 0
+  trainingMode: 1
   isPlayer: 0
   rewardValue: 0.1
   punishmentValue: -0.5
