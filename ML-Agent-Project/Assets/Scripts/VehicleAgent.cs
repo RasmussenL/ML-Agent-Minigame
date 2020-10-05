@@ -278,7 +278,9 @@ public class VehicleAgent : Agent
 
                 if (trainingMode)
                 {
-                    AddReward(rewardValue);
+                    float bonus1 = (rewardValue / 2.0f) * (rigidbody.velocity.magnitude / maximumSpeed);
+                    float bonus2 = (rewardValue / 2.0f) * Vector3.Dot((cp.gameObject.transform.position - transform.position), transform.forward);
+                    AddReward(rewardValue + bonus1 + bonus2);
                 }
             }
         }
