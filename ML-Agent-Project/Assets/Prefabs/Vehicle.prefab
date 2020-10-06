@@ -400,7 +400,7 @@ MonoBehaviour:
     VectorActionSize: 05000000
     VectorActionDescriptions: []
     VectorActionSpaceType: 1
-  m_Model: {fileID: 5022602860645237092, guid: e358a72dd6651d2429d20b6b53924f05, type: 3}
+  m_Model: {fileID: 5022602860645237092, guid: 3364f8dcc578a8340b2a532939db0f48, type: 3}
   m_InferenceDevice: 0
   m_BehaviorType: 0
   m_BehaviorName: ToyRaceCar
@@ -423,14 +423,14 @@ MonoBehaviour:
   hasUpgradedFromAgentParameters: 1
   MaxStep: 5000
   accelerateForce: 20
-  brakingForce: 1
+  brakingForce: 5
   maximumSpeed: 30
   turningSpeed: 150
   agentCamera: {fileID: 1869096508}
   trainingMode: 1
   isPlayer: 0
   rewardValue: 0.1
-  punishmentValue: -0.5
+  punishmentValue: -0.7
 --- !u!114 &1623614343
 MonoBehaviour:
   m_ObjectHideFlags: 0
