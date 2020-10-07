@@ -400,7 +400,7 @@ MonoBehaviour:
     VectorActionSize: 05000000
     VectorActionDescriptions: []
     VectorActionSpaceType: 1
-  m_Model: {fileID: 5022602860645237092, guid: 3364f8dcc578a8340b2a532939db0f48, type: 3}
+  m_Model: {fileID: 5022602860645237092, guid: b5c2df4b9fdb77d429c3d70e7b32807a, type: 3}
   m_InferenceDevice: 0
   m_BehaviorType: 0
   m_BehaviorName: ToyRaceCar

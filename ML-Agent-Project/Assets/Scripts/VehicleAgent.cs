@@ -294,8 +294,10 @@ public class VehicleAgent : Agent
     {
         if (trainingMode && collision.collider.CompareTag("boundary"))
         {
+            // Faster collision with boundary = larger negative reward
+            float detrement = (punishmentValue / 2.0f) * (rigidbody.velocity.magnitude / maximumSpeed);
             // Collided with area boundary, negative reward given
-            AddReward(punishmentValue);
+            AddReward(punishmentValue + detrement);
         }
     }
 
