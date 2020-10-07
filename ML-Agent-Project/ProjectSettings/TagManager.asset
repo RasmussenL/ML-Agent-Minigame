@@ -3,7 +3,12 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - checkpoint
+  - boundary
+  - checkpoint_Collection
+  - startPosition
+  - agentCamera
   layers:
   - Default
   - TransparentFX
