@@ -9,6 +9,8 @@ TagManager:
   - checkpoint_Collection
   - startPosition
   - agentCamera
+  - start
+  - midpoint
   layers:
   - Default
   - TransparentFX

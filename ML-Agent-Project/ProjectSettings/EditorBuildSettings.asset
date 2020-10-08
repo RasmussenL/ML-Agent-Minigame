@@ -12,6 +12,6 @@ EditorBuildSettings:
     path: Assets/Scenes/LoadingScreen.unity
     guid: c65ef466f35d05e48bea2918109e49cf
   - enabled: 1
-    path: Assets/Scenes/TrainingScene.unity
-    guid: d1c3109bdb54ad54c8a2b2838528e640
+    path: Assets/Scenes/Racetrack.unity
+    guid: 5ad365d2956d1774d8999c8327e3b14e
   m_configObjects: {}
