@@ -35,6 +35,8 @@ public class VehicleAgent : Agent
     [Tooltip("Value that is given as a punishment for hitting boundaries")]
     public float punishmentValue = -.5f;
 
+    //Current lap (amount of times checkpoints resets)
+    private int currentLap = 1;
 
     // The Rigidbody of the agent
     new private Rigidbody rigidbody;
@@ -248,6 +250,8 @@ public class VehicleAgent : Agent
             // End of track loop reached, set back to beginning
             trackArea.ResetCheckpoints();
             nextCheckpoint = trackArea.Checkpoints[0];
+            currentLap += 1;
+            GameManager.Instance.oCurLap = currentLap;
         }
         else
         {
