@@ -101,7 +101,7 @@ MonoBehaviour:
   m_MinSize: {x: 403, y: 221}
   m_MaxSize: {x: 8003, y: 4021}
   vertical: 0
-  controlID: 39
+  controlID: 61
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -126,7 +126,7 @@ MonoBehaviour:
   m_MinSize: {x: 403, y: 492}
   m_MaxSize: {x: 10001, y: 14042}
   vertical: 1
-  controlID: 38
+  controlID: 60
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -197,7 +197,7 @@ MonoBehaviour:
   m_MinSize: {x: 679, y: 492}
   m_MaxSize: {x: 14002, y: 14042}
   vertical: 0
-  controlID: 37
+  controlID: 132
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -315,20 +315,20 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scenes
+    - Assets/Materials
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scenes
+  - Assets/Materials
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\miken\Desktop\400ML\ML-Agent-Minigame\ML-Agent-Project
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 56500000
-    m_LastClickedID: 20566
-    m_ExpandedIDs: 00000000c248000000ca9a3b
+    m_SelectedIDs: 22420000
+    m_LastClickedID: 16930
+    m_ExpandedIDs: 00000000423f000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -356,7 +356,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000c2480000
+    m_ExpandedIDs: 00000000423f0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -616,9 +616,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
+      m_SelectedIDs: a4e0ffff
       m_LastClickedID: 0
-      m_ExpandedIDs: 62a3ffff50baffffcabbffff0ed6ffffa45b0000a65b0000a85b0000aa5b0000ac5b0000ae5b0000b05b0000b25b0000b45b0000b65b0000b85b0000d25b0000265c0000
+      m_ExpandedIDs: 78f9ffff6a4d0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -808,9 +808,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -33.731323, y: -104.71875, z: -54.72168}
+    m_Target: {x: -15.2265625, y: -49.0625, z: 50.972656}
     speed: 2
-    m_Value: {x: -33.731323, y: -104.71875, z: -54.72168}
+    m_Value: {x: -15.2265625, y: -49.0625, z: 50.972656}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -856,13 +856,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.26599038, y: -0.2491951, z: 0.0713753, w: 0.92849624}
+    m_Target: {x: 0.41831583, y: -0.5231518, z: 0.32877985, w: 0.66582304}
     speed: 2
-    m_Value: {x: 0.26469707, y: -0.24790221, z: 0.07060269, w: 0.9292444}
+    m_Value: {x: 0.41780287, y: -0.5241257, z: 0.32939172, w: 0.6650068}
   m_Size:
-    m_Target: 146.75427
+    m_Target: 96.211426
     speed: 2
-    m_Value: 140.43471
+    m_Value: 100.74495
   m_Ortho:
     m_Target: 1
     speed: 2
