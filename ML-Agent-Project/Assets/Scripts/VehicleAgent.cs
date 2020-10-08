@@ -288,6 +288,26 @@ public class VehicleAgent : Agent
                 }
             }
         }
+        else if (collider.CompareTag("start"))
+        {
+            if (isPlayer)
+            {
+                //Debug.Log("Player hit start");
+                if (GameManager.Instance.midpointHit)
+                {
+                    GameManager.Instance.pCurLap += 1;
+                    GameManager.Instance.midpointHit = false;
+                }
+            }
+        }
+        else if (collider.CompareTag("midpoint"))
+        {
+            if (isPlayer)
+            {
+                //Debug.Log("Player hit midpoint");
+                GameManager.Instance.midpointHit = true;
+            }
+        }
     }
 
     /// <summary>

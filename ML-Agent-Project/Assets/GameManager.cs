@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     public int pCurLap = 1;
     public int oCurLap = 1;
 
+    public bool midpointHit = false;
     private bool racing = true;
 
     // Start is called before the first frame update
@@ -50,6 +51,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
     private void EndGame()
     {
         pLap.enabled = false;
@@ -58,4 +60,6 @@ public class GameManager : MonoBehaviour
         Destroy(player);
         Destroy(opponent);
     }
+
+
 }

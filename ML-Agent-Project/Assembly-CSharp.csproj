@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="Assets\ExampleScripts\SimpleCameraController.cs" />
     <Compile Include="Assets\GameManager.cs" />
+    <Compile Include="Assets\PlayerLap.cs" />
     <Compile Include="Assets\Scripts\Checkpoint.cs" />
     <Compile Include="Assets\Scripts\ControllerTest\TempTestScript.cs" />
     <Compile Include="Assets\Scripts\MenuStuff\Loading.cs" />
