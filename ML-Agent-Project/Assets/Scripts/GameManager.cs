@@ -12,6 +12,9 @@ public class GameManager : MonoBehaviour
     public Text pLap;
     public Text oLap;
     public Text winText;
+    //public Image bgImg;
+
+    public Camera playerCamera;
 
     public int pCurLap = 1;
     public int oCurLap = 1;
@@ -26,7 +29,10 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
-        winText.enabled = false;
+        //winText.enabled = false;
+        opponent.GetComponent<VehicleAgent>().FreezeAgent();
+        player.GetComponent<VehicleAgent>().FreezeAgent();
+        StartCoroutine(StartGame());
     }
 
     // Update is called once per frame
@@ -46,19 +52,35 @@ public class GameManager : MonoBehaviour
                 winText.text = "Opponent Wins";
                 racing = false;
             }
-            pLap.text = "Lap " + pCurLap + "/3";
-            oLap.text = "OpponentLap " + oCurLap + "/3";
+            pLap.text = pCurLap + "/3";
+            oLap.text = oCurLap + "/3";
         }
     }
 
+    private IEnumerator StartGame()
+    {
+        winText.text = "3";
+        yield return new WaitForSeconds(1f);
+        winText.text = "2";
+        yield return new WaitForSeconds(1f);
+        winText.text = "1";
+        yield return new WaitForSeconds(1f);
+        winText.text = "RACE!";
+        opponent.GetComponent<VehicleAgent>().UnfreezeAgent();
+        player.GetComponent<VehicleAgent>().UnfreezeAgent();
+        yield return new WaitForSeconds(1f);
+        winText.text = "";
+        //bgImg.enabled = false;
+    }
 
     private void EndGame()
     {
         pLap.enabled = false;
         oLap.enabled = false;
-        winText.enabled = true;
-        Destroy(player);
-        Destroy(opponent);
+       // bgImg.enabled = true;
+        opponent.GetComponent<VehicleAgent>().FreezeAgent();
+        player.GetComponent<VehicleAgent>().FreezeAgent();
+        playerCamera.enabled = false;
     }
 
 
