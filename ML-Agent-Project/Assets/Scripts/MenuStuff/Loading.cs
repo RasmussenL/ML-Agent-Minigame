@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Loading : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public Image progressBar;
     void Start()
     {
         StartCoroutine(LoadAsyncOperation());
@@ -16,7 +17,8 @@ public class Loading : MonoBehaviour
         AsyncOperation gameLevel = SceneManager.LoadSceneAsync(2);
         while (gameLevel.progress < 1)
         {
-            Debug.Log("Loading...");
+            Debug.Log(gameLevel.progress);
+            progressBar.fillAmount = gameLevel.progress;
             yield return new WaitForEndOfFrame();
         }
 
