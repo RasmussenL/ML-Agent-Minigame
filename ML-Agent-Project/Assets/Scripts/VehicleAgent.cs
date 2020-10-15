@@ -35,6 +35,9 @@ public class VehicleAgent : Agent
     [Tooltip("Value that is given as a punishment for hitting boundaries")]
     public float punishmentValue = -.5f;
 
+    private float prevDistancetoPoint;
+    private float curDistancetoPoint;
+
     //Current lap (amount of times checkpoints resets)
     private int currentLap = 1;
 
@@ -82,6 +85,7 @@ public class VehicleAgent : Agent
 
         CheckpointsPassed = 0;
 
+
         // Zero out velocities so that movement stops before a new episode begins
         rigidbody.velocity = Vector3.zero;
         rigidbody.angularVelocity = Vector3.zero;
@@ -108,6 +112,8 @@ public class VehicleAgent : Agent
         // NOTE: This should be the first checkpoint in the trackArea.Checkpoints list
         nextCheckpoint = null;
         UpdateNextCheckpoint();
+        Transform tOfNextCheckPoint = nextCheckpoint.GetComponent<Transform>();
+        prevDistancetoPoint = Vector3.Distance(transform.position, tOfNextCheckPoint.position);
     }
 
 
@@ -251,7 +257,11 @@ public class VehicleAgent : Agent
             trackArea.ResetCheckpoints();
             nextCheckpoint = trackArea.Checkpoints[0];
             currentLap += 1;
-            GameManager.Instance.oCurLap = currentLap;
+            if (!trainingMode)
+            {
+                GameManager.Instance.oCurLap = currentLap;
+            }
+            
         }
         else
         {
@@ -334,6 +344,30 @@ public class VehicleAgent : Agent
         if (nextCheckpoint != null)
         {
             Debug.DrawLine(transform.position, nextCheckpoint.gameObject.transform.position, Color.green);
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        // Avoid scenario where nearest flower nectar is stolen from opponent
+        if (trainingMode && nextCheckpoint != null)
+        {
+            float bonus1 = (rewardValue / 2.0f) * (rigidbody.velocity.magnitude / maximumSpeed);
+            AddReward(bonus1);
+
+            Transform tOfNextCheckPoint = nextCheckpoint.GetComponent<Transform>();
+            float distanceToAgent = Vector3.Distance(transform.position, tOfNextCheckPoint.position);
+
+            curDistancetoPoint = distanceToAgent;
+
+            if(prevDistancetoPoint > curDistancetoPoint)
+            {
+                AddReward(rewardValue/5);
+            }
+
+            prevDistancetoPoint = curDistancetoPoint;
+
+
         }
     }
 }
