@@ -15,7 +15,7 @@ public class VehicleAgent : Agent
     public float brakingForce = 0.5f;
 
     [Tooltip("Maximun velocity of the agent")]
-    public float maximumSpeed = 5f;
+    public float maximumSpeed = 15f; // 5f;
 
     [Tooltip("Rotation speed for turning")]
     public float turningSpeed = 150f;
@@ -30,10 +30,13 @@ public class VehicleAgent : Agent
     public bool isPlayer = false;
 
     [Tooltip("Value that is given as a reward for reaching checkpoints")]
-    public float rewardValue = .02f;
+    public float rewardValue = .1f; // .02f;
 
     [Tooltip("Value that is given as a punishment for hitting boundaries")]
     public float punishmentValue = -.5f;
+
+    private float prevDistancetoPoint;
+    private float curDistancetoPoint;
 
     //Current lap (amount of times checkpoints resets)
     private int currentLap = 1;
@@ -135,10 +138,10 @@ public class VehicleAgent : Agent
             moveForce = (vectorAction[0] * brakingForce) * transform.forward;
         }
 
-        if (rigidbody.velocity.magnitude < maximumSpeed)
-        {
+       // if (rigidbody.velocity.magnitude < maximumSpeed)
+       //{
             rigidbody.AddForce(moveForce);
-        }
+       // }
 
         // Get current rotation
         Vector3 rotationVector = transform.rotation.eulerAngles;
@@ -251,7 +254,10 @@ public class VehicleAgent : Agent
             trackArea.ResetCheckpoints();
             nextCheckpoint = trackArea.Checkpoints[0];
             currentLap += 1;
-            GameManager.Instance.oCurLap = currentLap;
+            if (!trainingMode)
+            {
+                GameManager.Instance.oCurLap = currentLap;
+            }
         }
         else
         {
@@ -284,7 +290,8 @@ public class VehicleAgent : Agent
                 {
                     float bonus1 = (rewardValue / 2.0f) * (rigidbody.velocity.magnitude / maximumSpeed);
                     float bonus2 = (rewardValue / 2.0f) * Vector3.Dot((cp.gameObject.transform.position - transform.position), transform.forward);
-                    AddReward(rewardValue + bonus1 + bonus2);
+                    //AddReward(rewardValue + bonus1 + bonus2);
+                    AddReward(1 + bonus1 + bonus2);
                 }
             }
         }
@@ -319,9 +326,10 @@ public class VehicleAgent : Agent
         if (trainingMode && collision.collider.CompareTag("boundary"))
         {
             // Faster collision with boundary = larger negative reward
-            float detrement = (punishmentValue / 2.0f) * (rigidbody.velocity.magnitude / maximumSpeed);
+            //float detrement = (punishmentValue / 2.0f) * (rigidbody.velocity.magnitude / maximumSpeed);
             // Collided with area boundary, negative reward given
-            AddReward(punishmentValue + detrement);
+            //AddReward(punishmentValue + detrement);
+            AddReward(-0.25f);
         }
     }
 
@@ -334,6 +342,30 @@ public class VehicleAgent : Agent
         if (nextCheckpoint != null)
         {
             Debug.DrawLine(transform.position, nextCheckpoint.gameObject.transform.position, Color.green);
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        // Avoid scenario where nearest flower nectar is stolen from opponent
+        if (trainingMode && nextCheckpoint != null)
+        {
+            float bonus1 = (rewardValue / 2.0f) * (rigidbody.velocity.magnitude / maximumSpeed);
+            AddReward(bonus1);
+
+            Transform tOfNextCheckPoint = nextCheckpoint.GetComponent<Transform>();
+            float distanceToAgent = Vector3.Distance(transform.position, tOfNextCheckPoint.position);
+
+            curDistancetoPoint = distanceToAgent;
+
+            if (prevDistancetoPoint > curDistancetoPoint)
+            {
+                AddReward(rewardValue / 5);
+            }
+
+            prevDistancetoPoint = curDistancetoPoint;
+
+
         }
     }
 }

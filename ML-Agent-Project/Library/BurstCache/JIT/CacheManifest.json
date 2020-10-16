@@ -3,7 +3,7 @@
   "Assemblies": [
     {
       "FullName": "Unity.Burst, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
-      "LastWriteTime": "2020-10-07T20:08:57.6251281Z"
+      "LastWriteTime": "2020-10-08T23:53:59.3318147Z"
     },
     {
       "FullName": "mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
@@ -15,7 +15,7 @@
     },
     {
       "FullName": "Unity.Barracuda.BurstBLAS, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
-      "LastWriteTime": "2020-10-07T20:09:01.0031124Z"
+      "LastWriteTime": "2020-10-08T23:53:58.9363198Z"
     },
     {
       "FullName": "mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
@@ -23,7 +23,7 @@
     },
     {
       "FullName": "Unity.Barracuda, Version=1.0.3.0, Culture=neutral, PublicKeyToken=null",
-      "LastWriteTime": "2020-10-07T20:08:59.9905854Z"
+      "LastWriteTime": "2020-10-08T23:53:59.0440661Z"
     }
   ],
   "Functions": [
