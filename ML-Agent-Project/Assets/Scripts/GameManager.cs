@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     public GameObject player;
     public GameObject opponent;
+    public GameObject pause;
+    public GameObject pauseFirstButton;
 
     public Text pLap;
     public Text oLap;
@@ -21,6 +25,7 @@ public class GameManager : MonoBehaviour
 
     public bool midpointHit = false;
     private bool racing = true;
+    private bool paused = false;
 
     // Start is called before the first frame update
     private void Awake()
@@ -40,6 +45,10 @@ public class GameManager : MonoBehaviour
     {
         if (racing)
         {
+            //if (Input.GetButtonDown("Pause"))
+            //{
+            //    PauseGame();
+            //}
             if (pCurLap > 3)
             {
                 EndGame();
@@ -83,5 +92,33 @@ public class GameManager : MonoBehaviour
         playerCamera.enabled = false;
     }
 
+    private void PauseGame()
+    {
+        if (!paused)
+        {
+            Time.timeScale = 0f;
+            pause.SetActive(true);
+            paused = true;
+            //winText.text = "Paused";
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(pauseFirstButton);
+        }
+        else
+        {
+            Continue();
+        }
+    }
 
+    public void Continue()
+    {
+        Time.timeScale = 1f;
+        pause.SetActive(false);
+        paused = false;
+        //winText.text = "";
+    }
+
+    public void BackToMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
 }
