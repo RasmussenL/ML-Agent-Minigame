@@ -12,6 +12,10 @@ public class GameManager : MonoBehaviour
     public GameObject opponent;
     public GameObject pause;
     public GameObject pauseFirstButton;
+    public GameObject win;
+    public GameObject winFirstButton;
+    public GameObject bg;
+    public Camera playerCam;
 
     public Text pLap;
     public Text oLap;
@@ -45,19 +49,21 @@ public class GameManager : MonoBehaviour
     {
         if (racing)
         {
-            //if (Input.GetButtonDown("Pause"))
-            //{
-            //    PauseGame();
-            //}
+            if (Input.GetButtonDown("Pause"))
+            {
+                PauseGame();
+            }
             if (pCurLap > 3)
             {
                 EndGame();
                 winText.text = "Player Wins";
+                winText.color = Color.green;
                 racing = false;
             }
             else if (oCurLap > 3)
             {
                 EndGame();
+                winText.color = Color.red;
                 winText.text = "Opponent Wins";
                 racing = false;
             }
@@ -86,10 +92,15 @@ public class GameManager : MonoBehaviour
     {
         pLap.enabled = false;
         oLap.enabled = false;
+        bg.SetActive(false);
+        playerCam.enabled = false;
        // bgImg.enabled = true;
         opponent.GetComponent<VehicleAgent>().FreezeAgent();
         player.GetComponent<VehicleAgent>().FreezeAgent();
         playerCamera.enabled = false;
+        win.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(winFirstButton);
     }
 
     private void PauseGame()
