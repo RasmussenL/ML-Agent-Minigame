@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour
 {
     public GameObject[] panels;
     public GameObject menuDef;
     public GameObject controlsDef;
+    public GameObject[] difButtons;
 
     public void GoTo(string name)
     {
@@ -38,6 +40,22 @@ public class MenuManager : MonoBehaviour
     public void StartGame()
     {
         SceneManager.LoadScene(1);
+    }
+
+    public void Dif1()
+    {
+        Button myButton = difButtons[0].GetComponent<Button>();
+        myButton.colors = ColorBlock.defaultColorBlock;
+    }
+
+    public void Dif2()
+    {
+
+    }
+
+    public void Dif3()
+    {
+
     }
 
     public void QuitGame()
