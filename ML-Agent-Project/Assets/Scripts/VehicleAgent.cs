@@ -350,8 +350,11 @@ public class VehicleAgent : Agent
         // Avoid scenario where nearest flower nectar is stolen from opponent
         if (trainingMode && nextCheckpoint != null)
         {
-            float bonus1 = (rewardValue / 2.0f) * (rigidbody.velocity.magnitude / maximumSpeed);
-            AddReward(bonus1);
+            if(transform.position.y > -1){
+                float bonus1 = (rewardValue / 2.0f) * (rigidbody.velocity.magnitude / maximumSpeed);
+                AddReward(bonus1);
+            }
+            
 
             Transform tOfNextCheckPoint = nextCheckpoint.GetComponent<Transform>();
             float distanceToAgent = Vector3.Distance(transform.position, tOfNextCheckPoint.position);
@@ -360,7 +363,7 @@ public class VehicleAgent : Agent
 
             if (prevDistancetoPoint > curDistancetoPoint)
             {
-                AddReward(rewardValue / 5);
+                AddReward(rewardValue / 25);
             }
 
             prevDistancetoPoint = curDistancetoPoint;
