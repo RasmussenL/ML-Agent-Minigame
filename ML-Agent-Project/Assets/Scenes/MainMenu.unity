@@ -1978,6 +1978,11 @@ MonoBehaviour:
   - {fileID: 1534011203}
   menuDef: {fileID: 1267727674}
   controlsDef: {fileID: 652876869}
+  difButtons:
+  - {fileID: 1343600474}
+  - {fileID: 2079784094}
+  - {fileID: 278791107}
+  myColor: {r: 0.25, g: 1, b: 0.6404111, a: 1}
 --- !u!1 &1832637112
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,14 +14,37 @@ public class Loading : MonoBehaviour
 
     IEnumerator LoadAsyncOperation()
     {
-        AsyncOperation gameLevel = SceneManager.LoadSceneAsync(2);
-        while (gameLevel.progress < 1)
-        {
-            Debug.Log(gameLevel.progress);
-            progressBar.fillAmount = gameLevel.progress;
-            yield return new WaitForEndOfFrame();
-        }
 
+        if (PlayerPrefs.GetString("Difficulty") == "easy")
+        {
+            AsyncOperation gameLevel = SceneManager.LoadSceneAsync(2);
+            while (gameLevel.progress < 1)
+            {
+                Debug.Log(gameLevel.progress);
+                progressBar.fillAmount = gameLevel.progress;
+                yield return new WaitForEndOfFrame();
+            }
+        }
+        else if (PlayerPrefs.GetString("Difficulty") == "medium")
+        {
+            AsyncOperation gameLevel = SceneManager.LoadSceneAsync(3);
+            while (gameLevel.progress < 1)
+            {
+                Debug.Log(gameLevel.progress);
+                progressBar.fillAmount = gameLevel.progress;
+                yield return new WaitForEndOfFrame();
+            }
+        }
+        else if (PlayerPrefs.GetString("Difficulty") == "hard")
+        {
+            AsyncOperation gameLevel = SceneManager.LoadSceneAsync(4);
+            while (gameLevel.progress < 1)
+            {
+                Debug.Log(gameLevel.progress);
+                progressBar.fillAmount = gameLevel.progress;
+                yield return new WaitForEndOfFrame();
+            }
+        }
         
     }
 }

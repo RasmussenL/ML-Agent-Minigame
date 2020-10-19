@@ -38,6 +38,8 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
+        // This Continue() prevents pauses on reload
+        Continue();
         //winText.enabled = false;
         opponent.GetComponent<VehicleAgent>().FreezeAgent();
         player.GetComponent<VehicleAgent>().FreezeAgent();
@@ -74,6 +76,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator StartGame()
     {
+        
         winText.text = "3";
         yield return new WaitForSeconds(1f);
         winText.text = "2";
@@ -97,7 +100,7 @@ public class GameManager : MonoBehaviour
        // bgImg.enabled = true;
         opponent.GetComponent<VehicleAgent>().FreezeAgent();
         player.GetComponent<VehicleAgent>().FreezeAgent();
-        playerCamera.enabled = false;
+        //playerCamera.enabled = false;
         win.SetActive(true);
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(winFirstButton);
@@ -130,6 +133,12 @@ public class GameManager : MonoBehaviour
 
     public void BackToMenu()
     {
+        var objects = GameObject.FindObjectsOfType<GameObject>();
+        Resources.UnloadUnusedAssets();
+        foreach (GameObject o in objects)
+        {
+            Destroy(o);
+        }
         SceneManager.LoadScene(0);
     }
 }

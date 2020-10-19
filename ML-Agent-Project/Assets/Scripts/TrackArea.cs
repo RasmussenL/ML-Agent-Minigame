@@ -120,6 +120,12 @@ public class TrackArea : MonoBehaviour
         checkpointDictionary = new Dictionary<Collider, Checkpoint>();
         Checkpoints = new List<Checkpoint>();
         StartPosistions = new List<Transform>();
+
+
+        FindChildCheckpoints(transform);
+
+        FindChildStartingPositions(transform);
+
     }
 
     /// <summary>
@@ -127,11 +133,14 @@ public class TrackArea : MonoBehaviour
     /// </summary>
     private void Start()
     {
+        //Debug.Log("Ran the track area start");
         // Find all checkpoints within the scene
-        FindChildCheckpoints(transform);
+        //FindChildCheckpoints(transform);
 
         // Find all starting positions in the scene
-        FindChildStartingPositions(transform);
+        //FindChildStartingPositions(transform);
+        //Debug.Log(StartPosistions.Count);
+
     }
 
 }

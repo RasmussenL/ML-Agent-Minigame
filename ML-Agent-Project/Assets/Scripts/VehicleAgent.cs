@@ -64,6 +64,10 @@ public class VehicleAgent : Agent
     /// <summary>
     /// Initialize the agent
     /// </summary>
+    /// 
+
+
+   
     public override void Initialize()
     {
         rigidbody = GetComponent<Rigidbody>();
@@ -88,6 +92,10 @@ public class VehicleAgent : Agent
         // Zero out velocities so that movement stops before a new episode begins
         rigidbody.velocity = Vector3.zero;
         rigidbody.angularVelocity = Vector3.zero;
+        if (trackArea.StartPosistions.Count == 0)
+        {
+            Debug.Log("Nothing is here");
+        }
 
         // Default to spawn in first starting position
         int startPos = Random.Range(0, trackArea.StartPosistions.Count);
@@ -112,7 +120,6 @@ public class VehicleAgent : Agent
         nextCheckpoint = null;
         UpdateNextCheckpoint();
     }
-
 
     /// <summary>
     /// Called when action is received from either the player input or the nerual network
@@ -370,5 +377,11 @@ public class VehicleAgent : Agent
 
 
         }
+    }
+
+    void OnDestroy()
+    {
+        // https://forum.unity.com/threads/solved-reloading-scene-with-agents.865039/
+        Academy.Instance.Dispose();
     }
 }
